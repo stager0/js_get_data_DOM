@@ -6,7 +6,7 @@ const countriesPopulations = document.querySelectorAll('.population');
 let totalPopulation = 0;
 let averagePopulation = 0;
 const populationList = [];
-const separator = countriesPopulations[0].textContent.match(/\D/)[0];
+const separator = countriesPopulations[0].textContent.match(/\D/)[0] || '';
 
 for (const countryHtml of countriesPopulations) {
   const population = Number(countryHtml.textContent.replace(/\D/g, ''));
@@ -18,14 +18,14 @@ for (const countryHtml of countriesPopulations) {
   }
 }
 
-averagePopulation = Math.round(totalPopulation / countriesPopulations.length);
+averagePopulation = Math.round(totalPopulation / populationList.length);
 
 const listAveragePopulation = String(averagePopulation).split('').reverse();
 const listTotalPopulation = String(totalPopulation).split('').reverse();
 const newListTotalPopulation = [];
 const newListAveragePopulation = [];
 
-for (let i = 0; i <= listTotalPopulation.length; i++) {
+for (let i = 0; i < listTotalPopulation.length; i++) {
   const num1 = listTotalPopulation[i];
   const num2 = listAveragePopulation[i];
 
@@ -57,7 +57,12 @@ for (let i = 0; i <= listTotalPopulation.length; i++) {
 const totalHtmlObj = document.querySelector('.total-population');
 const averageHtmlObj = document.querySelector('.average-population');
 
-averageHtmlObj.textContent = String(
-  newListAveragePopulation.reverse().join(''),
-);
-totalHtmlObj.textContent = String(newListTotalPopulation.reverse().join(''));
+if (newListAveragePopulation.length > 0) {
+  averageHtmlObj.textContent = String(
+    newListAveragePopulation.reverse().join(''),
+  );
+}
+
+if (newListTotalPopulation.length > 0) {
+  totalHtmlObj.textContent = String(newListTotalPopulation.reverse().join(''));
+}
